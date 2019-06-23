@@ -26,6 +26,13 @@
             </dependency>
 
             <dependency>
+                <groupId>org.scala-lang</groupId>
+                <artifactId>scala-library</artifactId>
+                <version>${scala.version}</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <dependency>
                 <groupId>org.apache.spark</groupId>
                 <artifactId>spark-sql_${scala.binary.version}</artifactId>
                 <version>${spark.version}</version>
@@ -39,41 +46,11 @@
                 <scope>test</scope>
             </dependency>
 
-            <dependency>
-                <groupId>org.scala-lang</groupId>
-                <artifactId>scala-library</artifactId>
-                <version>${scala.version}</version>
-                <scope>provided</scope>
-            </dependency>
-
-            <dependency>
+<!--         <dependency>
                 <groupId>com.databricks</groupId>
                 <artifactId>spark-avro_2.11</artifactId>
                 <version>4.0.0</version>
-            </dependency>
-
-            <!--
-            <dependency>
-                <groupId>org.apache.spark</groupId>
-                <artifactId>spark-sql_${scala.binary.version}</artifactId>
-            </dependency>
-
-            <dependency>
-                <groupId>org.scalatest</groupId>
-                <artifactId>scalatest_${scala.binary.version}</artifactId>
-            </dependency>
-
-
-            <dependency>
-                <groupId>org.apache.spark</groupId>
-                <artifactId>spark-sql_${scala.binary.version}</artifactId>
-            </dependency>
-
-           <dependency>
-                  <groupId>org.apache.spark</groupId>
-                  <artifactId>spark-streaming_2.11.8</artifactId>
-                  <version>${spark.version}</version>
-              </dependency>-->
+            </dependency>-->
 
 
        </dependencies>
@@ -83,7 +60,14 @@
             <plugin>
                 <groupId>net.alchim31.maven</groupId>
                 <artifactId>scala-maven-plugin</artifactId>
-                <version>3.4.6</version>
+                <configuration>
+                    <args>
+                        <arg>-unchecked</arg>
+                        <arg>-deprecation</arg>
+                        <arg>-explaintypes</arg>
+                        <arg>-feature</arg>
+                    </args>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>
