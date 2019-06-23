@@ -62,6 +62,7 @@ root
 
 ### Step by step process to test the program/application in Docker .
 #This flow is created on Window's Docker desktop.
+
 #Login to the Docker desktop and go the directory where all configuration files (Dockerfile, compose file and etc)
 #Move to the directory where this project's home directory is available in local.
 
@@ -94,11 +95,13 @@ docker-compose up
 ### URLs in docker test environment
 
  http://localhost:8083/admin/
+
  http://127.0.0.1:8080
+
  http://127.0.0.1:8081
 
 #### Note :
-This solution is for daily load.  The input provided data set contains different file content in it, one of the example is below. So advise to run the flows daily not for one time dump.
+This solution is developed for daily data load. The provided input data set contains different file content in it, one of the example is below. So it is recommended to run the flows by daily and not for one time dump.
 
 Header orders are different:
 2018-07-10 --> temperature,skipped_beat,at_risk
