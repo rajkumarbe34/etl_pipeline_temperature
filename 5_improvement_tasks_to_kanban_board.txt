@@ -1,0 +1,5 @@
+1) Include automate HIVE table creation in to the pipeline to make access to the incremental Data through table.  This external table need to be dropped & created every day run to adopt dynamic schema changes. Modification required from Docker & Pipeline project. It will helpful to the data scientist & ML team to make it easy to read & analyse the structured data.
+2) Establish Qlik dashboards out of the table to monitor the data quality and data availability.
+3) Add montly aggregations out of the result from this pipeline's output.
+4) Standardize Docker containers to handle in better way which includes Spark,Hive,Jenkins,Nexus and Airflow.
+5) Include CI/CD to automate the build & deployment process.

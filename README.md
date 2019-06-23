@@ -121,3 +121,4 @@ Header orders are different:
 2018-07-10 --> temperature,skipped_beat,at_risk
 2018-11-17 --> temperature,at_risk,skipped_beat,price
 
+*5 improvement tasks are attached to this project. File:  5_improvement_tasks_to_kanban_board.txt
