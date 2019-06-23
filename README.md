@@ -1,6 +1,7 @@
 # Pipeline
 
 Spark project Name : etl_pipeline_temperature
+
 Airflow DAG Name : temperature_etl_pipeline_daily
 
 ### Features
@@ -15,7 +16,7 @@ Airflow DAG Name : temperature_etl_pipeline_daily
 
 ## Requirement Information
 
-|  Requirement | Comments |
+|  Requirement | Implementation |
 | ------ | ------ |
 | Consume all the data and put them in a store of your choice | Daily data will be stored into HDFS in structured AVRO files and partitioned by year,month,day which came from file name   |
 | Handle the change of schema (if any)  | Dynamic schema feature(InferSchema) from Spark CSV reader is used so changes in the header will be handled automatically |
@@ -43,6 +44,7 @@ Airflow DAG Name : temperature_etl_pipeline_daily
 |     MEDIUM|      0|         1.0|31344.520336495516|2018-12-12| 1560636000000|2018|   12| 12|
 +-----------+-------+------------+------------------+----------+--------------+----+-----+---+
 
+*Copy above table to text editor for better visual alignment.
 
 #### Final schema - daily ETL
 
@@ -58,39 +60,51 @@ root
  |-- ingestion_date: date (nullable = false)
 
 
+#### Build Spark application
+
+1) Clone the project from : https://github.com/rajkumarbe34/etl_pipeline_temperature
+2) This is a maven project so download dependencies by maven plugin.
+3) mvn clean install   #This maven command will produce the executable shaded jar. This Jar need to be copied to container.
 
 
-### Step by step process to test the program/application in Docker .
-#This flow is created on Window's Docker desktop.
-
+### Step by step process to test the program/application in Docker Desktop.
+#This flow is created on Window's Docker desktop. (Please ignore below lines which begin with # symbol.)
 #Login to the Docker desktop and go the directory where all configuration files (Dockerfile, compose file and etc)
 #Move to the directory where this project's home directory is available in local.
 
-docker build -f dev.Dockerfile -t spark .
+docker build -f Dockerfile -t spark .
+
 docker network create dev
+
 docker-compose up
 
-
- docker run -d -p 8083:8083 -v C:/Users/scj470/Docker/dags/:/usr/local/airflow/dags  puckel/docker-airflow webserver -network dev
+docker run -d -p 8083:8083 -v C:/Users/scj470/Docker/dags/:/usr/local/airflow/dags  puckel/docker-airflow webserver -network dev
      #docker ps
      #docker exec -ti <AIRFLOW_CONTAINER_NAME> bash
      #exit
- docker run -it -p 8088:8088 -p 8042:8042 -p 4041:4040 --name driver -h driver spark:latest bash
-	#If the name already exist then please change it to new one.
-	#Now you have entered to the spark container.
 
- mkdir jars  input  #Inside spark container
+docker run -it -p 8088:8088 -p 8042:8042 -p 4041:4040 --name driver -h driver spark:latest bash
+
+#If the name already exist then please change it to new one.
+#Now you have entered to the spark container.
+
+mkdir jars  input  #Inside spark container
 
  #Open new PowerShell terminal and copy below files to specific containers.
  #If you changed the container name in previous steps then please modify the same here.  "driver" is the current name.
- docker cp C://Raj//workspace_intelliJ//etl_pipeline//target//etl_pipeline-1.0.0.jar driver:workspace/jars/
- docker cp C:/Raj/workspace_intelliJ/etl_pipeline/src/test/resources/input_src/2018-12-02.csv driver:workspace/input/
 
-  docker ps
- #Get the container name of Airflow and paste it to below command.
- docker exec -ti <container name> bash
- airflow scheduler -D #Some time need to trigger the scheduler manually
- airflow test temperature_etl_pipeline entry 2019-06-01
+docker cp C://Raj//workspace_intelliJ//etl_pipeline//target//etl_pipeline-1.0.0.jar driver:workspace/jars/
+
+docker cp C:/Raj/workspace_intelliJ/etl_pipeline/src/test/resources/input_src/2018-12-02.csv driver:workspace/input/
+
+docker ps
+#Get the container name of Airflow and paste it to below command.
+
+docker exec -ti <container name> bash
+
+airflow scheduler -D #Some time need to trigger the scheduler manually
+
+airflow test temperature_etl_pipeline entry 2019-06-01
 
 ### URLs in docker test environment
 
